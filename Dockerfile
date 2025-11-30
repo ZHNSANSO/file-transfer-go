@@ -1,5 +1,5 @@
 # ==============================================
-# AMD64 Dockerfile - 基于 build-fullstack.sh 流程
+# 多平台 Dockerfile - 基于 build-fullstack.sh 流程
 # ==============================================
 
 # 前端构建阶段
@@ -34,9 +34,11 @@ FROM golang:1.21-alpine AS go-builder
 RUN apk add --no-cache git ca-certificates tzdata
 
 ENV GOPROXY=https://proxy.golang.org,direct
+# 引入构建参数，由 buildx 自动提供
+ARG TARGETARCH
+
 ENV CGO_ENABLED=0
 ENV GOOS=linux
-ENV GOARCH=amd64
 
 WORKDIR /app
 
